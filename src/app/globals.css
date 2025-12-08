@@ -1,26 +1,53 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --spacing-fill: -webkit-fill-available;
+
+  --default-transition-duration: 200ms;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@utility bg-body {
+  @apply bg-white dark:bg-slate-800;
+}
+@utility text-body {
+  @apply text-slate-950 dark:text-slate-50;
+}
+@utility flex-center {
+  @apply flex items-center justify-center;
+}
+@utility underline-on-hover {
+  @apply relative transition-all after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-current after:scale-x-0 after:origin-bottom-right after:transition-transform hover:after:scale-x-100 hover:after:origin-bottom-left;
+}
+@utility container {
+  @apply mx-auto lg:px-8 max-xs:px-8;
+}
+@utility truncate {
+  @apply w-fit max-w-full;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  html {
+    @apply scroll-smooth text-[16px] max-md:text-[15px] max-sm:text-[14px] max-[450px]:text-[13px];
+    scrollbar-width: auto;
+    scrollbar-gutter: stable;
+    /* scrollbar-color: var(--color-primary) #0000; */
   }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  body {
+    @apply bg-body text-body;
+  }
+  button, a {
+    @apply cursor-pointer;
+  }
+  img {
+    @apply max-w-full select-none [-webkit-user-drag:none] pointer-events-none;
+  }
+  [disabled] {
+    @apply opacity-50 cursor-not-allowed pointer-events-none select-none;
+  }
+  /* ::selection,
+  ::-moz-selection {
+    @apply bg-tertiary text-primary p-px;
+  } */
 }
